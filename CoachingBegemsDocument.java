@@ -7,11 +7,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Type;
 
-import com.fusi24.common.stereotype.HasParent;
+import com.fusi24.common.stereotype.HasName;
 import com.fusi24.hseauto.model.util.Constants;
 
 import io.crnk.core.resource.annotations.JsonApiRelation;
@@ -19,23 +17,23 @@ import io.crnk.core.resource.annotations.JsonApiResource;
 import lombok.Getter;
 import lombok.Setter;
 
-@JsonApiResource(type = "coachingProbem")
-@Getter
-@Setter
+@JsonApiResource(type = "coachingBegemsDocument")
+@Getter @Setter
 @Entity
-@Table(name = "coaching_problem", catalog = Constants.BEATS_SCHEMA)
-public class CoachingProblem extends BaseEntity implements HasParent<CoachingProblem> {
-
-	private String problem;
-
-	@JsonApiRelation
-	@ManyToOne(fetch = FetchType.LAZY)
-	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "parent_id")
-	private CoachingProblem parent;
-
+@Table(name = "coaching_document_begems", catalog = Constants.BEATS_SCHEMA)
+public class CoachingBegemsDocument extends BaseEntity implements HasName {
+	
+	@Column(name = "document_name")
+	private String name;
+	
 	@Type(type = "boolean")
 	@Column(name = "is_active")
 	private Boolean isActive;
+	
+	@JsonApiRelation
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "coaching_level_id")
+	private CoachingLevel level;
+	
 
 }

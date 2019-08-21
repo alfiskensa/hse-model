@@ -1,4 +1,4 @@
-package com.fusi24.hse.v2.model;
+package com.fusi24.hseauto.model.entity;
 
 import java.util.Date;
 import java.util.Set;
@@ -10,42 +10,50 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fusi24.hseauto.model.util.Constants;
 
 import io.crnk.core.resource.annotations.JsonApiRelation;
 import io.crnk.core.resource.annotations.JsonApiResource;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @JsonApiResource(type = "coachingResult")
-@Getter @Setter
-public class CoachingResult extends BaseModel {
+@Getter
+@Setter
+@Entity
+@Table(name = "coaching_result", catalog = Constants.BEATS_SCHEMA)
+public class CoachingResult extends BaseEntity {
 	
 	@JsonApiRelation
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "coacher_id")
 	private Employee coacher;
-	
+
 	@JsonApiRelation
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "coachee_id")
 	private Employee coachee;
-	
+
 	@JsonApiRelation
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "topic_id")
 	private CoachingTopic topic;
 	
 	@JsonApiRelation
-	@JsonIgnoreProperties("result")
-	private Set<CoachingAnswer> answers;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "location_id")
+	private Location location;
 	
-	private Double score;
-	
-	private String predicate;
-	
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	
-	@JsonApiRelation
-	private Location location;
+	private Double score;
 
+	private String predicate;
+	
+	private String note;
+
+	@JsonApiRelation
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "result")
+	private Set<CoachingAnswer> answers;
 }

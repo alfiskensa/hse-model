@@ -1,4 +1,11 @@
-package com.fusi24.hse.v2.model;
+package com.fusi24.hseauto.model.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -7,17 +14,27 @@ import io.crnk.core.resource.annotations.JsonApiResource;
 import lombok.Getter;
 import lombok.Setter;
 
+@JsonIgnoreProperties("result")
 @JsonApiResource(type = "coachingAnswer")
 @Getter @Setter
-public class CoachingAnswer extends BaseModel{
+@Entity
+@Table(name = "coaching_answer")
+public class CoachingAnswer extends BaseEntity {
 
 	@JsonApiRelation
-	private CoachingQuestion question;
-	
-	private String answer;
-	
-	@JsonApiRelation
-	@JsonIgnoreProperties("answers")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "result_id")
 	private CoachingResult result;
+	
+	@JsonApiRelation
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "question_id")
+	private CoachingQuestion question;
 
+	@Column(name = "answer_1")
+	private String answer1;
+	
+	@Column(name = "answer_2")
+	private String answer2;
+	
 }

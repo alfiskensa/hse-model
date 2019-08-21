@@ -1,16 +1,15 @@
 package com.fusi24.hseauto.model.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.annotations.Type;
 
-import com.fusi24.common.stereotype.HasActive;
 import com.fusi24.common.stereotype.HasName;
 import com.fusi24.common.stereotype.HasParent;
 import com.fusi24.hseauto.model.util.Constants;
@@ -20,34 +19,29 @@ import io.crnk.core.resource.annotations.JsonApiResource;
 import lombok.Getter;
 import lombok.Setter;
 
-@JsonApiResource(type = "department")
+@JsonApiResource(type = "pja")
 @Getter
 @Setter
 @Entity
-@Table(name = "m_departemen", catalog = Constants.SID_SCHEMA)
-public class Department extends BaseEntity implements HasName, HasParent<Department>, HasActive {
+@Table(name = "m_pja", catalog = Constants.BEATS_SCHEMA)
+public class Pja extends BaseEntityMaster implements HasName, HasParent<Pja> {
 
-	@Column(name = "nama")
 	private String name;
-
-	@JsonApiRelation
-	@OneToOne
-	@JoinColumn(name = "id_perusahaan")
-	private Company company;
 
 	@JsonApiRelation
 	@OneToOne
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "id_parent")
-	private Department parent;
-
-	@Type(type = "boolean")
-	@Column(name = "is_active")
-	private Boolean isActive;
+	private Pja parent;
 
 	@JsonApiRelation
-	@OneToOne
-	@JoinColumn(name = "id_divisi")
-	private Division division;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_site")
+	private Location location;
+
+	@JsonApiRelation
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_pja_type")
+	private PjaType pjaType;
 
 }

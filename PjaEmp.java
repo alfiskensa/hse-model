@@ -13,22 +13,26 @@ import io.crnk.core.resource.annotations.JsonApiResource;
 import lombok.Getter;
 import lombok.Setter;
 
-@JsonApiResource(type = "coachingTargetTopic")
+@JsonApiResource(type = "pjaEmp")
 @Getter
 @Setter
 @Entity
-@Table(name = "coaching_target_topic", catalog = Constants.BEATS_SCHEMA)
-public class CoachingTargetTopic extends BaseEntity {
+@Table(name = "m_pja_emp", catalog = Constants.BEATS_SCHEMA)
+public class PjaEmp extends BaseEntityMaster {
 
 	@JsonApiRelation
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "target_id")
-	// @JsonIgnoreProperties("topics")
-	private CoachingTarget target;
+	@JoinColumn(name = "id_employee")
+	private Employee employee;
 
 	@JsonApiRelation
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "topic_id")
-	private CoachingTopic topic;
+	@JoinColumn(name = "id_pja")
+	private Pja pja;
+
+	@JsonApiRelation
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_pja_type")
+	private PjaType pjaType;
 
 }
