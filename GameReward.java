@@ -23,7 +23,7 @@ import lombok.Setter;
 @Getter @Setter
 @Entity
 @Table(name = "game_reward", catalog = Constants.BEATS_SCHEMA)
-public class GameReward extends BaseEntity implements Reward<User, GameActionExecution, GameActionReward, GameMetric, GameMetricItem>
+public class GameReward extends BaseEntity implements Reward<User, GameActionExecution, GameActionReward, GameLeaderboardHistory, GameLeaderboardReward, GameMetric, GameMetricItem>
 {
 	@JsonApiRelation
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -39,6 +39,16 @@ public class GameReward extends BaseEntity implements Reward<User, GameActionExe
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "game_action_reward_id")
 	private GameActionReward actionReward;
+	
+	@JsonApiRelation
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "game_leaderboard_history_id")
+	private GameLeaderboardHistory leaderboardHistory;
+	
+	@JsonApiRelation
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "game_leaderboard_reward_id")
+	private GameLeaderboardReward leaderboardReward;
 	
 	@JsonApiRelation
 	@ManyToOne(fetch = FetchType.LAZY)

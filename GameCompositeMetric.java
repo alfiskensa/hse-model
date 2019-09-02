@@ -8,26 +8,26 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
-import com.fusi24.game.stereotype.SetMetric;
+import com.fusi24.game.stereotype.CompositeMetric;
 
 import io.crnk.core.resource.annotations.JsonApiRelation;
 import io.crnk.core.resource.annotations.JsonApiResource;
 import lombok.Getter;
 import lombok.Setter;
 
-@JsonApiResource(type = "gameSetMetric")
+@JsonApiResource(type = "gameCompositeMetric", resourcePath = "gameMetric")
 @Getter @Setter
 @Entity
-@DiscriminatorValue("SET")
-public class GameSetMetric extends GameMetric implements SetMetric<GameMetricItem>
+@DiscriminatorValue("COMPOSITE")
+public class GameCompositeMetric extends GameMetric implements CompositeMetric<GameCompositeMetricItem>
 {
-	@JsonApiRelation()
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "metric")
-	private Set<GameMetricItem> items;
+	@JsonApiRelation
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "parentMetric")
+	private Set<GameCompositeMetricItem> metrics;
 	
 	@Override
 	public String getType()
 	{
-		return "SET";
+		return "COMPOSITE";
 	}
 }

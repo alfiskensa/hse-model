@@ -9,22 +9,29 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fusi24.game.stereotype.Leaderboard;
 import com.fusi24.game.stereotype.TimePeriod;
 import com.fusi24.hseauto.model.util.Constants;
 
+import io.crnk.core.resource.annotations.JsonApiRelation;
+import io.crnk.core.resource.annotations.JsonApiResource;
 import lombok.Getter;
 import lombok.Setter;
 
+//@JsonIgnoreProperties("metric")
+@JsonApiResource(type = "gameLeaderboard")
 @Getter @Setter
 @Entity
-@Table(name = "gane_leaderboard", catalog = Constants.BEATS_SCHEMA)
-public class GameLeaderboard extends BaseEntity implements Leaderboard<GameLeaderboardMetric>
+@Table(name = "game_leaderboard", catalog = Constants.BEATS_SCHEMA)
+public class GameLeaderboard extends BaseEntity implements Leaderboard<GameMetric, GameLeaderboardReward>
 {
 	@Column(nullable = false, unique = true)
 	private String code;
@@ -34,8 +41,16 @@ public class GameLeaderboard extends BaseEntity implements Leaderboard<GameLeade
 	
 	private String description;
 	
+	@JsonApiRelation
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "game_metric_id", nullable = false)
+	private GameMetric metric;
+	
 	@Enumerated(EnumType.STRING)
 	private TimePeriod period;
+	
+	@Column(name = "period_value")
+	private Integer periodValue;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "start_date")
@@ -45,6 +60,7 @@ public class GameLeaderboard extends BaseEntity implements Leaderboard<GameLeade
 	@Column(name = "end_date")
 	private Date endDate;
 	
+	@JsonApiRelation
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "leaderboard")
-	private Set<GameLeaderboardMetric> metrics;
+	private Set<GameLeaderboardReward> rewards;
 }

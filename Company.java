@@ -54,7 +54,7 @@ public class Company extends BaseEntity implements HasName {
 	@JsonApiRelation
 	@OneToOne
 	@JoinColumn(name = "id_status")
-	private SidStatus status;
+	private SidStatus sidStatus;
 
 	@Column(name = "tanggal_update")
 	private Date updateDate;

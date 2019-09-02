@@ -135,5 +135,4 @@ public class Employee extends BaseEntity implements HasName {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_departemen")
 	private Department department;
-
 }

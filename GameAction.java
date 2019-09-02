@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fusi24.game.stereotype.Action;
@@ -55,11 +54,11 @@ public class GameAction extends BaseEntity implements Action<GameCondition, Game
 	private Boolean isActive;
 	
 	@JsonApiRelation
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinTable(name = "game_action_condition",
 			joinColumns = @JoinColumn(name = "game_action_id"),
 			inverseJoinColumns = @JoinColumn(name = "game_condition_id"))
-	private GameCondition condition;
+	private Set<GameCondition> conditions;
 
 	@JsonApiRelation
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "action")
@@ -68,4 +67,10 @@ public class GameAction extends BaseEntity implements Action<GameCondition, Game
 	@JsonApiRelation
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "action")
 	private Set<GameActionVariable> variables;
+
+	@Override
+	public GameCondition getCondition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

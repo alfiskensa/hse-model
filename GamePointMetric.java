@@ -10,7 +10,7 @@ import io.crnk.core.resource.annotations.JsonApiResource;
 import lombok.Getter;
 import lombok.Setter;
 
-@JsonApiResource(type = "gamePointMetric", resourcePath = "gameMetric")
+@JsonApiResource(type = "gamePointMetric")
 @Getter @Setter
 @Entity
 @DiscriminatorValue("POINT")
@@ -24,4 +24,6 @@ public class GamePointMetric extends GameMetric implements PointMetric
 	{
 		return "POINT";
 	}
+	
+	public void setType(String type) {};
 }

@@ -56,4 +56,14 @@ public class CoachingResult extends BaseEntity {
 	@JsonApiRelation
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "result")
 	private Set<CoachingAnswer> answers;
+	
+	@JsonApiRelation
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "pja_id")
+	private Pja pjaBc;
+	
+	@JsonApiRelation
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "pja_child_id")
+	private Pja pjaPartner;
 }

@@ -12,7 +12,7 @@ import io.crnk.core.resource.annotations.JsonApiResource;
 import lombok.Getter;
 import lombok.Setter;
 
-@JsonApiResource(type = "coachingParamterResult")
+@JsonApiResource(type = "coachingParameterResult")
 @Getter @Setter
 @Entity
 @Table(name = "coaching_paramater_result", catalog = Constants.BEATS_SCHEMA)

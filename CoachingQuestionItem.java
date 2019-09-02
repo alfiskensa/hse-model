@@ -17,7 +17,7 @@ import io.crnk.core.resource.annotations.JsonApiResource;
 import lombok.Setter;
 import lombok.Getter;
 
-@JsonApiResource(type = "coachingQuestonItem")
+@JsonApiResource(type = "coachingQuestionItem")
 @JsonIgnoreProperties("question")
 @Getter @Setter
 @Entity

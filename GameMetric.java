@@ -18,7 +18,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @JsonTypeInfo(use = Id.MINIMAL_CLASS, include = As.PROPERTY, property = "@class")
-@JsonApiResource(type = "gameMetric", subTypes = GamePointMetric.class)
+@JsonApiResource(type = "gameMetric", subTypes = {GamePointMetric.class, GameSetMetric.class, GameStateMetric.class, GameCompositeMetric.class})
 @Getter @Setter
 @Entity
 @Table(name = "game_metric", catalog = Constants.BEATS_SCHEMA)

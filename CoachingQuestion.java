@@ -47,7 +47,7 @@ public class CoachingQuestion extends BaseEntity {
 	private Boolean isActive;
 	
 	@JsonApiRelation
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "question")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "question")
 	private Set<CoachingQuestionItem> questionItems;
 
 }

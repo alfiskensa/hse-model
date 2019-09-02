@@ -10,7 +10,7 @@ import io.crnk.core.resource.annotations.JsonApiResource;
 import lombok.Getter;
 import lombok.Setter;
 
-@JsonApiResource(type = "gameFormulaCondition")
+@JsonApiResource(type = "gameFormulaCondition", resourcePath = "gameCondition")
 @Getter @Setter
 @Entity
 @DiscriminatorValue("FORMULA")

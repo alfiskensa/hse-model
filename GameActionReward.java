@@ -1,6 +1,7 @@
 package com.fusi24.hseauto.model.entity;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,7 +28,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @JsonIgnoreProperties("action")
-@JsonApiResource(type = "gameActionReward", postable = false, patchable = false, deletable = false)
+@JsonApiResource(type = "gameActionReward")
 @Getter @Setter
 @Entity
 @Table(name = "game_action_reward", catalog = Constants.BEATS_SCHEMA)
@@ -77,9 +78,15 @@ public class GameActionReward extends BaseEntity implements ActionReward<GameMet
 	private Boolean isActive;
 	
 	@JsonApiRelation
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinTable(name = "game_action_reward_condition",
 			joinColumns = @JoinColumn(name = "game_action_reward_id"),
 			inverseJoinColumns = @JoinColumn(name = "game_condition_id"))
-	private GameCondition condition;
+	private Set<GameCondition> conditions;
+
+	@Override
+	public GameCondition getCondition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
